@@ -26,4 +26,12 @@ class Confeitaria extends Model
     {
         return $this->hasMany(Produto::class);
     }
+
+     // Deletar os produtos associados ao excluir a confeitaria
+     protected static function booted()
+     {
+         static::deleting(function ($confeitaria) {
+             $confeitaria->produtos()->delete();
+         });
+     }
 }
