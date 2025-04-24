@@ -6,18 +6,20 @@ use App\Models\Confeitaria;
 use Illuminate\Http\Request;
 use App\Http\Requests\ConfeitariaRequest;
 use Inertia\Inertia;
+use App\Models\Produto;
 
 class ConfeitariaController extends Controller
 {
     // Listar todas as confeitarias
     public function index()
     {
-        $confeitarias = Confeitaria::all();
-
+        $confeitarias = Confeitaria::with('produtos.imagens')->get();
+    
         return Inertia::render('Confeitarias/Index', [
-            'confeitarias' => $confeitarias
+            'confeitarias' => $confeitarias,
         ]);
     }
+    
 
     // Formulário de criação
     public function create()

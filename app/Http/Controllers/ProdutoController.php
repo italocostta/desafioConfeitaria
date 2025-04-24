@@ -13,13 +13,13 @@ class ProdutoController extends Controller
 {
     // Listar todos os produtos
     public function index()
-    {
-        $produtos = Produto::with('confeitaria')->get();
+{
+    $produtos = Produto::with(['confeitaria', 'imagens'])->get();
 
-        return Inertia::render('Produtos/Index', [
-            'produtos' => $produtos
-        ]);
-    }
+    return Inertia::render('Produtos/Index', [
+        'produtos' => $produtos,
+    ]);
+}
 
     // Formulário de criação
     public function create()
