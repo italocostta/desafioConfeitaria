@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('confeitarias', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->string('cep');
-            $table->string('rua');
-            $table->string('numero');
-            $table->string('bairro');
-            $table->string('estado');
-            $table->string('cidade');
+            $table->string('nome', 255);
+            $table->string('cep', 8);
+            $table->string('rua', 255);
+            $table->string('numero', 10);
+            $table->string('bairro', 100);
+            $table->string('estado', 2);
+            $table->string('cidade', 100);
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
-            $table->string('telefone');
+            $table->string('telefone', 20)->nullable();
             $table->timestamps();
         });
     }

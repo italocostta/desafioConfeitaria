@@ -4,11 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Confeitaria extends Model
 {
     use HasFactory;
 
+    /**
+     * Os atributos atribuíveis em massa
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'nome',
         'cep',
@@ -22,16 +28,26 @@ class Confeitaria extends Model
         'telefone',
     ];
 
-    public function produtos()
+    /**
+     * Relacionamento: uma confeitaria tem muitos produtos
+     *
+     * @return HasMany
+     */
+    public function produtos(): HasMany
     {
         return $this->hasMany(Produto::class);
     }
 
-     // Deletar os produtos associados ao excluir a confeitaria
-     protected static function booted()
-     {
-         static::deleting(function ($confeitaria) {
-             $confeitaria->produtos()->delete();
-         });
-     }
+    /**
+     * Boot method to handle model events
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (Confeitaria $confeitaria) {
+            // Excluir produtos associados antes de excluir a confeitaria
+            $confeitaria->produtos()->delete();
+        });
+    }
 }
